@@ -2,11 +2,18 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false
+    }
 });
 
-module.exports = {
-  query: (text, params) => pool.query(text, params),
-  // для транзакций или пула можно добавить методы
-};
+pool.on('connect', () => {
+    console.log('✅ Успешное подключение к PostgreSQL (Timeweb)');
+});
+
+pool.on('error', (err) => {
+    console.error('❌ Ошибка PostgreSQL:', err.message);
+});
+
+module.exports = pool;
