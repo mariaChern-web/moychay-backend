@@ -1,4 +1,4 @@
-// server.js — Минимальная рабочая версия для Railway
+// server.js — Исправленная версия для Railway
 
 const express = require('express');
 const cors = require('cors');
@@ -7,12 +7,13 @@ const jwt = require('jsonwebtoken');
 const pool = require('./config/db');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;   // ← только одна декларация PORT
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Middleware авторизации
+// ====================== AUTH MIDDLEWARE ======================
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
@@ -28,7 +29,7 @@ const authenticateToken = (req, res, next) => {
     });
 };
 
-// Подключаем роуты
+// ====================== РОУТЫ ======================
 const authRoutes = require('./routes/authRoutes');
 const cartRoutes = require('./routes/cart');
 
@@ -45,6 +46,12 @@ app.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 Сервер успешно запущен на порту ${PORT}`);
     console.log(`🌐 Адрес: https://moychay-backend-1.onrender.com`);
     console.log('✅ Backend готов принимать запросы');
+});
+
+// Graceful shutdown для Railway
+process.on('SIGTERM', () => {
+    console.log('🛑 Получен SIGTERM от Railway, завершаем работу...');
+    process.exit(0);
 });
 
 console.log('Сервер инициализирован');
