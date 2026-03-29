@@ -41,9 +41,10 @@ app.get('/', (req, res) => {
 });
 
 // ====================== ЗАПУСК ======================
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 Сервер успешно запущен на порту ${PORT}`);
     console.log(`🌐 Адрес: https://moychay-backend-1.onrender.com`);
+    console.log('✅ Backend готов принимать запросы');
 });
 
 console.log('Сервер инициализирован');
