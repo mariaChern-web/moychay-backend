@@ -9,7 +9,7 @@ const pool = new Pool({
 });
 
 pool.on('connect', () => {
-    console.log('✅ Успешное подключение к PostgreSQL (Timeweb)');
+    console.log('✅ Подключение к PostgreSQL успешно (Railway)');
 });
 
 pool.on('error', (err) => {
