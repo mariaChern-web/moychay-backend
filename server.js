@@ -11,12 +11,16 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware (ТОЛЬКО ОДИН РАЗ!)
 app.use(cors({
-    origin: ['http://localhost:5000', 'https://cc963974.tw1.ru', 'https://moychay-backend-1.onrender.com'],
+    origin: [
+        'http://localhost:5000', 
+        'https://cc963974.tw1.ru', 
+        'https://moychay-backend-1.onrender.com',
+        'https://moychay26.xo.je'  // ДОБАВЬТЕ ЭТУ СТРОКУ!
+    ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
-app.use(express.json());
 
 // ====================== AUTH MIDDLEWARE ======================
 const authenticateToken = (req, res, next) => {
